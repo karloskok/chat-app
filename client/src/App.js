@@ -1,25 +1,20 @@
-import logo from './logo.svg';
+import { JoinRoom } from './pages/joinRoom/JoinRoom';
+import { Chat } from './pages/chat/Chat';
 import './App.css';
+import { useContext } from 'react';
+import { AppContext } from './context/AppContext';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const { user } = useContext(AppContext);
+
+    return (
+        <>
+            {
+                user ? <Chat /> : <JoinRoom />
+            }
+        </>
+    );
 }
 
 export default App;
