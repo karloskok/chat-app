@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     user: null,
     messages: [],
     users: [],
+    usersTyping: [],
     typing: false,
 };
 
@@ -27,6 +28,7 @@ export const AppContextProvider = ({ children }) => {
                 users: state.users,
                 messages: state.messages,
                 typing: state.typing,
+                usersTyping: state.usersTyping,
                 socket,
                 dispatch,
             }}

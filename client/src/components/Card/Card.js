@@ -35,6 +35,7 @@ const Body = function ({ children }) {
             width: '100%',
             height: '460px',
             backgroundColor: '#9ff0c259',
+            position: 'relative'
         }}>
             {children}
         </div>

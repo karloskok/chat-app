@@ -5,16 +5,17 @@ import Card from '../../components/Card/Card'
 import reducer from '../../store/reducer/reducer'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import SendInputField from '../../components/InputField/SendInputField';
-import { RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, REMOVE_LAST_MESSAGE } from '../../store/actions/actionTypes';
+import { RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, REMOVE_LAST_MESSAGE, OTHER_IS_TYPING } from '../../store/actions/actionTypes';
 import { AppContext } from '../../context/AppContext';
-import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange, removeOtherLastMessage } from '../../store/actions/actions'
+import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange, removeOtherLastMessage, UserTyping, OtherUserTyping } from '../../store/actions/actions'
 import Message from '../../components/Message/Message'
 import InfoMessage from '../../components/InfoMessage/InfoMessage'
+import Dots from '../../components/Dots/Dots'
 
 export const Chat = () => {
 
     const scrollRef = useRef();
-    const { user, users, messages, dispatch, socket } = useContext(AppContext);
+    const { user, users, messages, typing, dispatch, socket } = useContext(AppContext);
     const [newMessage, setNewMessage] = useState("");
 
     useEffect(() => {
@@ -42,7 +43,15 @@ export const Chat = () => {
             removeOtherLastMessage(data, dispatch);
         });
 
+        socket.current.on(OTHER_IS_TYPING, (data) => {
+            OtherUserTyping(data, dispatch);
+        });
+
     }, [socket.current]);
+
+    useEffect(() => {
+        UserTyping({ user: user.nickname, typing: newMessage != "" }, socket);
+    }, [newMessage]);
 
     const Validate = () => {
         let valid = true;
@@ -138,6 +147,7 @@ export const Chat = () => {
                         <div ref={scrollRef}></div>
                         <div style={{ height: '20px' }}></div>
                     </Card.Scroll >
+                    <Dots typing={typing} />
                 </Card.Body>
 
                 <Card.Footer>

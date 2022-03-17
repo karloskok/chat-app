@@ -7,6 +7,8 @@ import {
     USER_LIST,
     SET_NICKNAME,
     REMOVE_LAST_MESSAGE,
+    TYPING,
+    OTHER_IS_TYPING
 } from './actionTypes'
 
 export const onJoinChat = async (user, dispatch, socket) => {
@@ -97,6 +99,23 @@ export const AddMessage = async (messageData, dispatch, socket) => {
 export const ReceiveMessage = (messageData, dispatch) => {
     try {
         dispatch({ type: RECEIVE_MESSAGE, payload: messageData });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+export const UserTyping = async (data, socket) => {
+    try {
+        await socket.current.emit(TYPING, data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const OtherUserTyping = async (data, dispatch) => {
+    try {
+        dispatch({ type: OTHER_IS_TYPING, payload: data });
     } catch (error) {
         console.log(error);
     }

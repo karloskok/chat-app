@@ -65,7 +65,8 @@ module.exports = function Server(app) {
                 }
                 users.push({
                     id: socket.id,
-                    user
+                    user,
+                    typing: false
                 });
                 socket.to('TEST_ROOM').emit(actionTypes.USER_JOINED_ROOM, response);
                 io.to('TEST_ROOM').emit(actionTypes.USER_LIST, users);
@@ -91,6 +92,10 @@ module.exports = function Server(app) {
 
             socket.on(actionTypes.REMOVE_LAST_MESSAGE, async (data) => {
                 socket.to('TEST_ROOM').emit(actionTypes.REMOVE_LAST_MESSAGE, data);
+            });
+
+            socket.on(actionTypes.TYPING, async (data) => {
+                socket.to('TEST_ROOM').emit(actionTypes.OTHER_IS_TYPING, data);
             });
 
             socket.on('disconnect', () => {
