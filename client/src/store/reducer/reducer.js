@@ -1,4 +1,4 @@
-import { JOIN_ROOM, SEND_MESSAGE, RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, SET_NICKNAME } from '../actions/actionTypes';
+import { JOIN_ROOM, SEND_MESSAGE, RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, SET_NICKNAME, REMOVE_LAST_MESSAGE } from '../actions/actionTypes';
 
 
 const reducer = (state, action) => {
@@ -40,6 +40,14 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 messages: [...state.messages, action.payload],
+            }
+
+        case REMOVE_LAST_MESSAGE:
+            let lastMessage = state.messages.findLast(x => x.author === action.payload.author);
+            lastMessage.removed = true;
+            lastMessage.message = 'Message deleted!';
+            return {
+                ...state,
             }
         default:
             return state;

@@ -7,7 +7,7 @@ import { RiSendPlaneFill } from 'react-icons/ri'
 import SendInputField from '../../components/InputField/SendInputField';
 import { RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, REMOVE_LAST_MESSAGE } from '../../store/actions/actionTypes';
 import { AppContext } from '../../context/AppContext';
-import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange } from '../../store/actions/actions'
+import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange, removeOtherLastMessage } from '../../store/actions/actions'
 import Message from '../../components/Message/Message'
 import InfoMessage from '../../components/InfoMessage/InfoMessage'
 
@@ -36,6 +36,10 @@ export const Chat = () => {
 
         socket.current.on(USER_LIST, (data) => {
             UserListChange(data, dispatch);
+        });
+
+        socket.current.on(REMOVE_LAST_MESSAGE, (data) => {
+            removeOtherLastMessage(data, dispatch);
         });
 
     }, [socket.current]);
@@ -116,13 +120,19 @@ export const Chat = () => {
                         <InfoMessage message={`Welcome ${user.nickname}!`} />
                         {
                             messages.map((m, i) => {
-                                return (m.info ? (
-                                    <InfoMessage key={i} message={m.message} />
-
-                                ) : (
+                                if (m.info) {
+                                    return (
+                                        <InfoMessage key={i} message={m.message} />
+                                    )
+                                } else if (m.removed) {
+                                    return (
+                                        <InfoMessage key={i} message={m.message} />
+                                    )
+                                } else {
+                                    return (
                                         <Message key={i} message={m} />
-
-                                    ))
+                                    )
+                                }
                             })
                         }
                         <div ref={scrollRef}></div>

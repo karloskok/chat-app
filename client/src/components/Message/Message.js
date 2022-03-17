@@ -5,6 +5,7 @@ import moment from "moment";
 const Message = ({ message }) => {
     const { user } = useContext(AppContext);
     const isDarkGreyColor = message.think;
+
     return (
         <div>
 

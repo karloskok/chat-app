@@ -55,9 +55,12 @@ const changeColorToDarkGrey = async (messageData, dispatch, socket) => {
     await socket.current.emit(SEND_MESSAGE, messageData);
     dispatch({ type: SEND_MESSAGE, payload: messageData });
 };
-const removeLastMessage = async (messageData, dispatch, socket) => {
+const removeMyLastMessage = async (messageData, dispatch, socket) => {
+    await socket.current.emit(REMOVE_LAST_MESSAGE, messageData);
+    dispatch({ type: REMOVE_LAST_MESSAGE, payload: messageData });
+};
 
-    // await socket.current.emit(REMOVE_LAST_MESSAGE, messageData);
+export const removeOtherLastMessage = async (messageData, dispatch, socket) => {
     dispatch({ type: REMOVE_LAST_MESSAGE, payload: messageData });
 };
 
@@ -72,7 +75,7 @@ const ParseMessage = (messageData, dispatch, socket) => {
         changeColorToDarkGrey(messageData, dispatch, socket);
         parsed = true;
     } else if (message.startsWith('/oops')) {
-        removeLastMessage(messageData, dispatch, socket);
+        removeMyLastMessage(messageData, dispatch, socket);
         parsed = true;
     }
     return parsed;
