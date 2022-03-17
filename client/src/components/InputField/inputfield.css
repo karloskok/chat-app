@@ -1,0 +1,23 @@
+input {
+  display: block;
+  padding: 7.5px 12px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+}
+
+input:focus {
+  outline: 1px solid rgb(0, 133, 138);
+}
+
+.send-input {
+  font-size: large;
+}
+
+.send-input:focus {
+  outline: none;
+}

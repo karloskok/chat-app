@@ -1,0 +1,10 @@
+.avatar {
+  background: linear-gradient(to bottom left, #79c7c5 20%, #a1e2d9 100%);
+  border-radius: 50%;
+  position: absolute;
+}
+
+.avatar p {
+  color: #f9fbff;
+  font-weight: bolder;
+}

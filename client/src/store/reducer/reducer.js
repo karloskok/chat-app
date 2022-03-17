@@ -1,4 +1,4 @@
-import { JOIN_ROOM } from '../actions/actionTypes';
+import { JOIN_ROOM, SEND_MESSAGE, RECEIVE_MESSAGE } from '../actions/actionTypes';
 
 
 const reducer = (state, action) => {
@@ -8,6 +8,18 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload,
+            }
+
+        case SEND_MESSAGE:
+            return {
+                ...state,
+                messages: [...state.messages, action.payload],
+            }
+
+        case RECEIVE_MESSAGE:
+            return {
+                ...state,
+                messages: [...state.messages, action.payload],
             }
         default:
             return state;
