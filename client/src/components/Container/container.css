@@ -5,6 +5,7 @@
   margin-left: auto;
   padding-right: 50px;
   padding-left: 50px;
+  align-items: center;
 
   @media screen and (max-width: 720px) {
     padding-right: 30px;

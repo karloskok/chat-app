@@ -1,7 +1,7 @@
 import React from 'react';
 import './inputfield.css'
 
-const InputField = ({ type, label, placeholder, style, value, onChange }) => {
+const InputField = ({ type, label, placeholder, style, onKeyDown, value, onChange }) => {
     return (
         <div className="input-field">
             {
@@ -14,6 +14,7 @@ const InputField = ({ type, label, placeholder, style, value, onChange }) => {
                 style={{ ...style }}
                 placeholder={placeholder}
                 type={type || 'text'}
+                onKeyDown={onKeyDown}
             />
         </div>
     )

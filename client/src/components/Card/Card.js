@@ -34,7 +34,7 @@ const Body = function ({ children }) {
         <div style={{
             width: '100%',
             height: '460px',
-            backgroundColor: '#e3f1f2',
+            backgroundColor: '#9ff0c259',
         }}>
             {children}
         </div>

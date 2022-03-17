@@ -12,7 +12,7 @@ const SendInputField = ({ value, onChange, onKeyDown }) => {
                 border: 'none',
                 backgroundColor: '#F9FBFF',
                 borderColor: '#F9FBFF',
-                color: '#79C7C5'
+                color: '#87c779'
             }}
             type='text'
             value={value}

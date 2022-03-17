@@ -5,15 +5,16 @@ import Card from '../../components/Card/Card'
 import reducer from '../../store/reducer/reducer'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import SendInputField from '../../components/InputField/SendInputField';
-import { RECEIVE_MESSAGE } from '../../store/actions/actionTypes';
+import { RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, REMOVE_LAST_MESSAGE } from '../../store/actions/actionTypes';
 import { AppContext } from '../../context/AppContext';
-import { AddMessage, ReceiveMessage } from '../../store/actions/actions'
+import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange } from '../../store/actions/actions'
 import Message from '../../components/Message/Message'
+import InfoMessage from '../../components/InfoMessage/InfoMessage'
 
 export const Chat = () => {
 
     const scrollRef = useRef();
-    const { user, messages, dispatch, socket } = useContext(AppContext);
+    const { user, users, messages, dispatch, socket } = useContext(AppContext);
     const [newMessage, setNewMessage] = useState("");
 
     useEffect(() => {
@@ -23,15 +24,41 @@ export const Chat = () => {
     useEffect(() => {
         socket.current.on(RECEIVE_MESSAGE, (data) => {
             ReceiveMessage(data, dispatch);
-        })
-    }, [socket.current])
+        });
+
+        socket.current.on(USER_JOINED_ROOM, (data) => {
+            UserJoinedRoom(data, dispatch);
+        });
+
+        socket.current.on(USER_LEAVE_ROOM, (data) => {
+            UserLeaveRoom(data, dispatch);
+        });
+
+        socket.current.on(USER_LIST, (data) => {
+            UserListChange(data, dispatch);
+        });
+
+    }, [socket.current]);
+
+    const Validate = () => {
+        let valid = true;
+        if (newMessage == '') {
+            valid = false;
+        }
+        return valid;
+    }
 
     const handleSubmitMessage = async (e) => {
         e.preventDefault();
+        if (!Validate()) {
+            return;
+        }
+
         const messageData = {
             author: user.nickname,
             message: newMessage,
-            time: new Date()
+            time: new Date(),
+            own: true,
         }
         AddMessage(messageData, dispatch, socket);
         setNewMessage("");
@@ -42,10 +69,19 @@ export const Chat = () => {
             handleSubmitMessage(event);
         }
     }
+    const getUsersList = () => {
+        let name = user.nickname;
+        let usersText = users.map(x => x.user).join(', ');
+        if (usersText != '') {
+            return `${name} - ${usersText}`;
+        } else {
+            return name;
+        }
+    }
 
     return (
-        <Container center top={50}>
-            <Card color="#f9fbff54" width={'80%'} height={600} textAlign='center' round={20} elevation={5} >
+        <Container center height={'100vh'}>
+            <Card width={'80%'} height={600} textAlign='center' round={20} elevation={5} >
                 <Card.Header>
                     <Container top='10px' style={{
                         padding: 0,
@@ -60,16 +96,37 @@ export const Chat = () => {
                             fontSize: '1em',
                             letterSpacing: '3px',
                             fontWeight: '400',
-                        }}>KArlo</Container>
+                        }}>
+                            <div style={{
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap'
+                            }}>
+                                {
+                                    getUsersList()
+                                }
+                            </div>
+                        </Container>
                     </Container>
                 </Card.Header>
 
                 <Card.Body>
                     <Card.Scroll>
-                        {messages.map((m, i) => (
-                            <Message key={i} message={m} />
-                        ))}
+                        <div style={{ height: '50px' }}></div>
+                        <InfoMessage message={`Welcome ${user.nickname}!`} />
+                        {
+                            messages.map((m, i) => {
+                                return (m.info ? (
+                                    <InfoMessage key={i} message={m.message} />
+
+                                ) : (
+                                        <Message key={i} message={m} />
+
+                                    ))
+                            })
+                        }
                         <div ref={scrollRef}></div>
+                        <div style={{ height: '20px' }}></div>
                     </Card.Scroll >
                 </Card.Body>
 
@@ -80,7 +137,7 @@ export const Chat = () => {
                             width: '40px',
                             height: '30px',
                             alignSelf: "center",
-                            color: '#79c7c599',
+                            color: '#6ac07099',
                             backgroundColor: "transparent",
                             border: 'none'
                         }}>

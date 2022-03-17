@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 const INITIAL_STATE = {
     user: null,
     messages: [],
+    users: [],
     typing: false,
 };
 
@@ -23,6 +24,7 @@ export const AppContextProvider = ({ children }) => {
         <AppContext.Provider
             value={{
                 user: state.user,
+                users: state.users,
                 messages: state.messages,
                 typing: state.typing,
                 socket,
