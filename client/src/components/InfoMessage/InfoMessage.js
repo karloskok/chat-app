@@ -1,13 +1,9 @@
-import React from 'react'
+import React from 'react';
+import './infomessage.css';
 
 const InfoMessage = ({ message }) => {
     return (
-        <div style={{
-            fontSize: 'small',
-            padding: '20px',
-            fontStyle: 'italic',
-            fontWeight: 'lighter'
-        }}>
+        <div className="infomessage">
             <span>{message}</span>
         </div>
     )

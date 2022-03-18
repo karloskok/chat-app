@@ -1,19 +1,37 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Container } from '../../components'
-import Avatar from '../../components/Avatar/Avatar'
-import Card from '../../components/Card/Card'
-import reducer from '../../store/reducer/reducer'
-import { RiSendPlaneFill } from 'react-icons/ri'
-import SendInputField from '../../components/InputField/SendInputField';
-import { RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, REMOVE_LAST_MESSAGE, OTHER_IS_TYPING, FADE_LAST_MESSAGE } from '../../store/actions/actionTypes';
 import { AppContext } from '../../context/AppContext';
-import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange, removeOtherLastMessage, UserTyping, OtherUserTyping, fadeOtherLastMessage } from '../../store/actions/actions'
-import Message from '../../components/Message/Message'
-import InfoMessage from '../../components/InfoMessage/InfoMessage'
-import Dots from '../../components/Dots/Dots'
-
+import { RiSendPlaneFill } from 'react-icons/ri'
+import {
+    Container,
+    Avatar,
+    Card,
+    SendInputField,
+    Message,
+    InfoMessage,
+    Dots,
+    Countdown
+} from '../../components';
+import {
+    RECEIVE_MESSAGE,
+    USER_JOINED_ROOM,
+    USER_LEAVE_ROOM,
+    USER_LIST,
+    REMOVE_LAST_MESSAGE,
+    OTHER_IS_TYPING,
+    FADE_LAST_MESSAGE
+} from '../../store/actions/actionTypes';
+import {
+    AddMessage,
+    ReceiveMessage,
+    UserJoinedRoom,
+    UserLeaveRoom,
+    UserListChange,
+    removeOtherLastMessage,
+    UserTyping,
+    OtherUserTyping,
+    fadeOtherLastMessage
+} from '../../store/actions/actions'
 export const Chat = () => {
-
     const scrollRef = useRef();
     const { user, users, messages, typing, dispatch, socket } = useContext(AppContext);
     const [newMessage, setNewMessage] = useState("");
@@ -77,6 +95,7 @@ export const Chat = () => {
             time: new Date(),
             own: true,
         }
+
         AddMessage(messageData, dispatch, socket);
         setNewMessage("");
     };
@@ -133,15 +152,16 @@ export const Chat = () => {
                         <InfoMessage message={`Welcome ${user.nickname}!`} />
                         {
                             messages.map((m, i) => {
-                                if (m.info) {
+                                if (m.info || m.removed) {
                                     return (
                                         <InfoMessage key={i} message={m.message} />
                                     )
-                                } else if (m.removed) {
+                                } else if (m.countdown) {
                                     return (
-                                        <InfoMessage key={i} message={m.message} />
+                                        <Countdown key={i} message={m} />
                                     )
-                                } else {
+                                }
+                                else {
                                     return (
                                         <Message key={i} message={m} />
                                     )

@@ -46,3 +46,18 @@
     opacity: 0.5;
   }
 }
+
+.bubble.show {
+  animation: slideFromBottom 0.2s linear;
+}
+
+@keyframes slideFromBottom {
+  0% {
+    margin-bottom: -20px;
+    opacity: 0;
+  }
+  100% {
+    margin-bottom: 0;
+    opacity: 1;
+  }
+}

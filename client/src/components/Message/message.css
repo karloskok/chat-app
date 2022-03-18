@@ -1,9 +1,78 @@
-.message-bubble.left {
-  animation: slideFromLeft 0.2s linear;
+.message-container {
+  padding: 10px 10px 0;
+  display: flex;
+  justify-content: left;
 }
 
-.message-bubble.right {
+.message-container.own {
+  justify-content: right;
+}
+
+.message-bubble {
+  animation: slideFromLeft 0.2s linear;
+
+  width: fit-content;
+  padding: 10px 20px;
+  max-width: 60%;
+  text-align: start;
+  background-color: #bfbfbfb8;
+  border-radius: 10px 10px 10px 0;
+  opacity: 1;
+  filter: brightness(1);
+}
+
+.message-bubble.own {
   animation: slideFromRight 0.2s linear;
+  background-color: #95ee87ad;
+  border-radius: 10px 10px 0 10px;
+}
+
+.message-bubble.fade {
+  opacity: 0.1;
+}
+
+.message-bubble.highlight {
+  filter: brightness(0.9);
+}
+
+.message-bubble span {
+  font-size: 100%;
+  color: black;
+  text-align: left;
+}
+
+.message-bubble span.highlight {
+  font-size: 110%;
+}
+
+.message-bubble span.darkgrey {
+  color: darkgrey;
+}
+
+.message-bubble span.own {
+  text-align: right;
+}
+
+.message-info {
+  padding: 0 20px;
+  display: flex;
+  justify-content: left;
+  widows: 100%;
+}
+
+.message-info.own {
+  justify-content: right;
+}
+
+.message-info-time {
+  font-size: x-small;
+  font-style: italic;
+}
+
+.message-info-author {
+  font-size: x-small;
+  white-space: break-spaces;
+  text-transform: uppercase;
 }
 
 @keyframes slideFromLeft {

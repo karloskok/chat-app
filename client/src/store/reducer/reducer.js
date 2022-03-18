@@ -1,8 +1,18 @@
-import { JOIN_ROOM, SEND_MESSAGE, RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, SET_NICKNAME, REMOVE_LAST_MESSAGE, OTHER_IS_TYPING, FADE_LAST_MESSAGE } from '../actions/actionTypes';
+import {
+    JOIN_ROOM,
+    SEND_MESSAGE,
+    RECEIVE_MESSAGE,
+    USER_JOINED_ROOM,
+    USER_LEAVE_ROOM,
+    USER_LIST,
+    SET_NICKNAME,
+    REMOVE_LAST_MESSAGE,
+    OTHER_IS_TYPING,
+    FADE_LAST_MESSAGE
+} from '../actions/actionTypes';
 
 
 const reducer = (state, action) => {
-    //TODO: userid
     switch (action.type) {
         case JOIN_ROOM:
             return {

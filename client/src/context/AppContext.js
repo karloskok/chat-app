@@ -2,7 +2,6 @@ import { createContext, useEffect, useReducer, useRef } from "react";
 import reducer from "../store/reducer/reducer";
 import io from 'socket.io-client';
 
-
 const INITIAL_STATE = {
     user: null,
     messages: [],

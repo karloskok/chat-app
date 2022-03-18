@@ -16,6 +16,12 @@ input:focus {
 
 .send-input {
   font-size: large;
+  width: 87%;
+  height: 35px;
+  border: none;
+  background-color: #f9fbff;
+  border-color: #f9fbff;
+  color: #87c779;
 }
 
 .send-input:focus {

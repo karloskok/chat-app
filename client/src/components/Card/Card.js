@@ -18,12 +18,7 @@ const Card = ({ children, width, height, textAlign, round, color, elevation }) =
 
 const Header = function ({ children }) {
     return (
-        <div style={{
-            width: '100%',
-            height: '70px',
-            backgroundColor: '#F9FBFF',
-            borderRadius: '20px 20px 0 0',
-        }}>
+        <div className="card-header">
             {children}
         </div>
     )
@@ -31,12 +26,7 @@ const Header = function ({ children }) {
 
 const Body = function ({ children }) {
     return (
-        <div style={{
-            width: '100%',
-            height: '460px',
-            backgroundColor: '#9ff0c259',
-            position: 'relative'
-        }}>
+        <div className="card-body">
             {children}
         </div>
     )
@@ -44,12 +34,7 @@ const Body = function ({ children }) {
 
 const Scroll = function ({ children }) {
     return (
-        <div style={{
-            overflowY: "scroll",
-            overflowX: 'clip',
-            height: '100%',
-            padding: '0 20px',
-        }}>
+        <div className="card-scroll">
             {children}
         </div>
     )
@@ -57,12 +42,7 @@ const Scroll = function ({ children }) {
 
 const Footer = function ({ children }) {
     return (
-        <div style={{
-            width: '100%',
-            height: '70px',
-            backgroundColor: '#F9FBFF',
-            borderRadius: '0 0 20px 20px',
-        }}>
+        <div className="card-footer">
             {children}
         </div>
     )
@@ -70,11 +50,7 @@ const Footer = function ({ children }) {
 
 const Split = function ({ children }) {
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            padding: '10px',
-        }}>
+        <div className="card-split">
             {children}
         </div>
     )
@@ -87,4 +63,4 @@ Card.Footer = Footer;
 Card.Split = Split;
 
 
-export default Card
+export default Card;

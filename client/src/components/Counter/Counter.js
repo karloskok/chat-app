@@ -4,7 +4,6 @@ import { RiTimerLine } from "react-icons/ri";
 const Counter = ({ delay, onExpire, children }) => {
     const [counter, setCounter] = useState(delay);
 
-    // Third Attempts
     useEffect(() => {
         if (counter <= 0) {
             onExpire();
