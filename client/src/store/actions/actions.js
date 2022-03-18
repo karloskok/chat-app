@@ -8,7 +8,8 @@ import {
     SET_NICKNAME,
     REMOVE_LAST_MESSAGE,
     TYPING,
-    OTHER_IS_TYPING
+    OTHER_IS_TYPING,
+    FADE_LAST_MESSAGE
 } from './actionTypes'
 
 export const onJoinChat = async (user, dispatch, socket) => {
@@ -57,6 +58,15 @@ const changeColorToDarkGrey = async (messageData, dispatch, socket) => {
     await socket.current.emit(SEND_MESSAGE, messageData);
     dispatch({ type: SEND_MESSAGE, payload: messageData });
 };
+
+const highlightMesage = async (messageData, dispatch, socket) => {
+    messageData.highlight = true;
+    let rest = messageData.message.replace('/highlight ', '');
+    messageData.message = rest;
+    await socket.current.emit(SEND_MESSAGE, messageData);
+    dispatch({ type: SEND_MESSAGE, payload: messageData });
+};
+
 const removeMyLastMessage = async (messageData, dispatch, socket) => {
     await socket.current.emit(REMOVE_LAST_MESSAGE, messageData);
     dispatch({ type: REMOVE_LAST_MESSAGE, payload: messageData });
@@ -67,6 +77,24 @@ export const removeOtherLastMessage = async (messageData, dispatch, socket) => {
 };
 
 
+const fadeMyLastMessage = async (messageData, dispatch, socket) => {
+    await socket.current.emit(FADE_LAST_MESSAGE, messageData);
+    dispatch({ type: FADE_LAST_MESSAGE, payload: messageData });
+};
+export const fadeOtherLastMessage = async (messageData, dispatch, socket) => {
+    dispatch({ type: FADE_LAST_MESSAGE, payload: messageData });
+};
+
+const countdown = async (messageData, dispatch, socket) => {
+    let [command, count, ...rest] = messageData.message.split(" ");
+    rest = rest.join(" ");
+    messageData.countdown = true;
+    messageData.count = count;
+    messageData.message = rest;
+    await socket.current.emit(SEND_MESSAGE, messageData);
+    dispatch({ type: SEND_MESSAGE, payload: messageData });
+};
+
 const ParseMessage = (messageData, dispatch, socket) => {
     let parsed = false;
     let message = messageData.message;
@@ -76,8 +104,17 @@ const ParseMessage = (messageData, dispatch, socket) => {
     } else if (message.startsWith('/think ')) {
         changeColorToDarkGrey(messageData, dispatch, socket);
         parsed = true;
+    } else if (message.startsWith('/highlight ')) {
+        highlightMesage(messageData, dispatch, socket);
+        parsed = true;
     } else if (message.startsWith('/oops')) {
         removeMyLastMessage(messageData, dispatch, socket);
+        parsed = true;
+    } else if (message.startsWith('/fadelast')) {
+        fadeMyLastMessage(messageData, dispatch, socket);
+        parsed = true;
+    } else if (message.startsWith('/countdown ')) {
+        countdown(messageData, dispatch, socket);
         parsed = true;
     }
     return parsed;

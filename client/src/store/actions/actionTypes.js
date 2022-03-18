@@ -8,4 +8,6 @@ export const SET_NICKNAME = 'SET_NICKNAME';
 export const REMOVE_LAST_MESSAGE = 'REMOVE_LAST_MESSAGE';
 export const TYPING = 'TYPING';
 export const OTHER_IS_TYPING = 'OTHER_IS_TYPING';
+export const FADE_LAST_MESSAGE = 'FADE_LAST_MESSAGE';
+export const COUNTDOWN = 'COUNTDOWN';
 

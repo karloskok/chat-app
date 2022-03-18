@@ -46,6 +46,7 @@ const Scroll = function ({ children }) {
     return (
         <div style={{
             overflowY: "scroll",
+            overflowX: 'clip',
             height: '100%',
             padding: '0 20px',
         }}>

@@ -15,4 +15,4 @@ const Dots = ({ typing }) => {
     )
 }
 
-export default Dots
+export default Dots;

@@ -5,9 +5,9 @@ import Card from '../../components/Card/Card'
 import reducer from '../../store/reducer/reducer'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import SendInputField from '../../components/InputField/SendInputField';
-import { RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, REMOVE_LAST_MESSAGE, OTHER_IS_TYPING } from '../../store/actions/actionTypes';
+import { RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, REMOVE_LAST_MESSAGE, OTHER_IS_TYPING, FADE_LAST_MESSAGE } from '../../store/actions/actionTypes';
 import { AppContext } from '../../context/AppContext';
-import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange, removeOtherLastMessage, UserTyping, OtherUserTyping } from '../../store/actions/actions'
+import { AddMessage, ReceiveMessage, UserJoinedRoom, UserLeaveRoom, UserListChange, removeOtherLastMessage, UserTyping, OtherUserTyping, fadeOtherLastMessage } from '../../store/actions/actions'
 import Message from '../../components/Message/Message'
 import InfoMessage from '../../components/InfoMessage/InfoMessage'
 import Dots from '../../components/Dots/Dots'
@@ -41,6 +41,10 @@ export const Chat = () => {
 
         socket.current.on(REMOVE_LAST_MESSAGE, (data) => {
             removeOtherLastMessage(data, dispatch);
+        });
+
+        socket.current.on(FADE_LAST_MESSAGE, (data) => {
+            fadeOtherLastMessage(data, dispatch);
         });
 
         socket.current.on(OTHER_IS_TYPING, (data) => {
@@ -145,7 +149,7 @@ export const Chat = () => {
                             })
                         }
                         <div ref={scrollRef}></div>
-                        <div style={{ height: '20px' }}></div>
+                        <div style={{ height: '40px' }}></div>
                     </Card.Scroll >
                     <Dots typing={typing} />
                 </Card.Body>

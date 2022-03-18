@@ -77,6 +77,11 @@ module.exports = function Server(app) {
                 socket.to('TEST_ROOM').emit(actionTypes.RECEIVE_MESSAGE, data);
             });
 
+            // socket.on(actionTypes.COUNTDOWN, async (data) => {
+            //     data.own = false;
+            //     socket.to('TEST_ROOM').emit(actionTypes.COUNTDOWN, data);
+            // });
+
             socket.on(actionTypes.SET_NICKNAME, async (nickname) => {
                 let current = users.find(x => x.id == socket.id);
                 const response = {
@@ -88,6 +93,10 @@ module.exports = function Server(app) {
                 users = users.map(x => x.id == socket.id ? { ...x, user: nickname } : x);
                 io.to('TEST_ROOM').emit(actionTypes.RECEIVE_MESSAGE, response);
                 io.to('TEST_ROOM').emit(actionTypes.USER_LIST, users);
+            });
+
+            socket.on(actionTypes.FADE_LAST_MESSAGE, async (data) => {
+                socket.to('TEST_ROOM').emit(actionTypes.FADE_LAST_MESSAGE, data);
             });
 
             socket.on(actionTypes.REMOVE_LAST_MESSAGE, async (data) => {

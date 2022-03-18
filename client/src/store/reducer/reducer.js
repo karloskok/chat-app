@@ -1,8 +1,8 @@
-import { JOIN_ROOM, SEND_MESSAGE, RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, SET_NICKNAME, REMOVE_LAST_MESSAGE, OTHER_IS_TYPING } from '../actions/actionTypes';
+import { JOIN_ROOM, SEND_MESSAGE, RECEIVE_MESSAGE, USER_JOINED_ROOM, USER_LEAVE_ROOM, USER_LIST, SET_NICKNAME, REMOVE_LAST_MESSAGE, OTHER_IS_TYPING, FADE_LAST_MESSAGE } from '../actions/actionTypes';
 
 
 const reducer = (state, action) => {
-
+    //TODO: userid
     switch (action.type) {
         case JOIN_ROOM:
             return {
@@ -46,6 +46,13 @@ const reducer = (state, action) => {
             let lastMessage = state.messages.findLast(x => x.author === action.payload.author);
             lastMessage.removed = true;
             lastMessage.message = `Message deleted by ${action.payload.author}!`;
+            return {
+                ...state,
+            }
+
+        case FADE_LAST_MESSAGE:
+            let fadeMessage = state.messages.findLast(x => x.author === action.payload.author);
+            fadeMessage.fade = true;
             return {
                 ...state,
             }

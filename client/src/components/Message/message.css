@@ -1,0 +1,29 @@
+.message-bubble.left {
+  animation: slideFromLeft 0.2s linear;
+}
+
+.message-bubble.right {
+  animation: slideFromRight 0.2s linear;
+}
+
+@keyframes slideFromLeft {
+  0% {
+    margin-left: -200px;
+    opacity: 0;
+  }
+  100% {
+    margin-left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromRight {
+  0% {
+    margin-right: -200px;
+    opacity: 0;
+  }
+  100% {
+    margin-right: 0;
+    opacity: 1;
+  }
+}
