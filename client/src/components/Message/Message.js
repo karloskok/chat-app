@@ -44,7 +44,11 @@ const Message = ({ message }) => {
 
         return (
             <Counter delay={message.count} onExpire={counterExpired} >
-                <span>{`Opened ${message.message} in a new window.`}</span>
+                <div style={{
+                    paddingTop: '10px',
+                }}>
+                    <span>{`Opened ${message.message} in a new window.`}</span>
+                </div>
             </Counter>
         )
         // setTimeout(() => {

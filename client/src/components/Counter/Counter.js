@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { RiTimerLine } from "react-icons/ri";
 
 const Counter = ({ delay, onExpire, children }) => {
     const [counter, setCounter] = useState(delay);
@@ -17,7 +18,17 @@ const Counter = ({ delay, onExpire, children }) => {
         <>
             {
                 counter > 0 ?
-                    <div>Countdown: {counter}</div> :
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        paddingTop: '10px',
+                    }}><RiTimerLine size={20} />
+                        <span style={{
+                            marginLeft: '5px'
+                        }}>
+                            {counter}
+                        </span>
+                    </div> :
                     <>{children}</>
             }
         </>
